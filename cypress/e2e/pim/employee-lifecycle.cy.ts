@@ -36,7 +36,7 @@ describe('PIM: employee lifecycle', { tags: ['@pim', '@e2e'] }, () => {
 
     // Find
     const list = new EmployeeListPage().visit().searchById(employee.employeeId);
-    list.recordCount().should('have.text', '(1) Record Found');
+    list.expectRecordCount('(1) Record Found');
     list.rows().should('have.length', 1);
     list.row(employee.employeeId).should('contain.text', employee.firstName).and('contain.text', employee.lastName);
 

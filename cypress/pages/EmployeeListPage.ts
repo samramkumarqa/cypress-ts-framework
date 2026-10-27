@@ -31,6 +31,13 @@ export class EmployeeListPage {
     return cy.contains('.orangehrm-horizontal-padding span', /Records? Found/);
   }
 
+  /** Compares the record-count text ignoring surrounding whitespace (the plural form renders with a leading space). */
+  expectRecordCount(text: string) {
+    this.recordCount().should(($el) => {
+      expect($el.text().trim()).to.eq(text);
+    });
+  }
+
   deleteRow(text: string) {
     cy.intercept('DELETE', '**/api/v2/pim/employees').as('deleteEmployees');
     this.row(text).find('.bi-trash').closest('button').click();

@@ -17,7 +17,7 @@ describe('PIM: employee list with stubbed API', { tags: ['@pim', '@stubbed'] }, 
     cy.wait('@list');
 
     const list = new EmployeeListPage();
-    list.recordCount().should('have.text', '(2) Records Found');
+    list.expectRecordCount('(2) Records Found');
     list.rows().should('have.length', 2);
     list.row('STUB001').should('contain.text', 'Ada').and('contain.text', 'Lovelace');
     list.row('STUB002').should('contain.text', 'Alan').and('contain.text', 'Turing');
@@ -28,7 +28,7 @@ describe('PIM: employee list with stubbed API', { tags: ['@pim', '@stubbed'] }, 
     cy.visit('/pim/viewEmployeeList');
     cy.wait('@list');
 
-    new EmployeeListPage().recordCount().should('have.text', 'No Records Found');
+    new EmployeeListPage().expectRecordCount('No Records Found');
     cy.get('.oxd-table-body .oxd-table-card').should('not.exist');
   });
 

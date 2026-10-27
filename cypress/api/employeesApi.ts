@@ -51,8 +51,8 @@ export const employeesApi = {
   },
 
   /**
-   * PUT replaces every personal-details field, so send the full set the UI sends,
-   * leaving the optional ones empty.
+   * PUT replaces every personal-details field, so send the full set the UI sends, leaving the optional ones empty.
+   * Text fields must be '' rather than null: OrangeHRM reads them as non-null strings and returns 500 on null.
    */
   updatePersonalDetails(
     empNumber: number,
@@ -68,7 +68,7 @@ export const employeesApi = {
         drivingLicenseNo: '',
         drivingLicenseExpiredDate: null,
         gender: null,
-        maritalStatus: null,
+        maritalStatus: '',
         birthday: null,
         nationalityId: null,
       },
