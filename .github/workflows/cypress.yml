@@ -1,0 +1,81 @@
+name: Cypress Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '15 3 * * 1-5' # weekdays 08:45 IST: Chrome + Firefox, plus the feature examples
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: Lint & typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+        env:
+          CYPRESS_INSTALL_BINARY: 0 # static checks don't need the Cypress app
+      - run: npm run typecheck
+      - run: npm run lint
+
+  orangehrm:
+    name: OrangeHRM (${{ matrix.browser }})
+    needs: quality
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: ${{ github.event_name == 'schedule' && fromJSON('["chrome","firefox"]') || fromJSON('["chrome"]') }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+      - name: Run Cypress
+        uses: cypress-io/github-action@v7
+        with:
+          browser: ${{ matrix.browser }}
+      - name: Upload report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v6
+        with:
+          name: report-${{ matrix.browser }}
+          path: |
+            cypress/reports/
+            cypress/screenshots/
+          retention-days: 14
+
+  examples:
+    name: Feature examples
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    needs: quality
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+      - name: Run examples
+        uses: cypress-io/github-action@v7
+        with:
+          config-file: cypress.examples.config.ts
+      - name: Upload report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v6
+        with:
+          name: report-examples
+          path: cypress/reports/examples/
+          retention-days: 14

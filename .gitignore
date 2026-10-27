@@ -1,0 +1,14 @@
+node_modules/
+.env
+
+# Cypress output
+cypress/reports/
+cypress/screenshots/
+cypress/videos/
+cypress/downloads/
+
+# OS / IDE
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json

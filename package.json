@@ -1,0 +1,35 @@
+{
+  "name": "cypress-ts-framework",
+  "version": "1.0.0",
+  "description": "Cypress + TypeScript framework for OrangeHRM: page objects, cy.session login, API tests with cy.request, network stubbing with cy.intercept",
+  "scripts": {
+    "test": "cypress run",
+    "test:smoke": "cypress run --expose grepTags=@smoke,grepFilterSpecs=true",
+    "test:api": "cypress run --spec \"cypress/e2e/api/**\"",
+    "test:ui": "cypress run --spec \"cypress/e2e/{auth,pim,dashboard}/**\"",
+    "test:chrome": "cypress run --browser chrome",
+    "test:firefox": "cypress run --browser firefox",
+    "test:examples": "cypress run --config-file cypress.examples.config.ts",
+    "open": "cypress open",
+    "open:examples": "cypress open --config-file cypress.examples.config.ts",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "@cypress/grep": "^7.0.0",
+    "@faker-js/faker": "^10.6.0",
+    "@types/node": "^26.6.5",
+    "cypress": "^16.2.0",
+    "cypress-mochawesome-reporter": "^5.0.0",
+    "eslint": "^10.13.0",
+    "eslint-plugin-cypress": "^7.0.2",
+    "prettier": "^3.9.10",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.72.1"
+  },
+  "private": true,
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "data": [
+    {
+      "empNumber": 90001,
+      "lastName": "Lovelace",
+      "firstName": "Ada",
+      "middleName": "",
+      "employeeId": "STUB001",
+      "terminationId": null,
+      "jobTitle": { "id": null, "title": null, "isDeleted": null },
+      "subunit": { "id": null, "name": null },
+      "empStatus": { "id": null, "name": null },
+      "supervisors": []
+    },
+    {
+      "empNumber": 90002,
+      "lastName": "Turing",
+      "firstName": "Alan",
+      "middleName": "",
+      "employeeId": "STUB002",
+      "terminationId": null,
+      "jobTitle": { "id": null, "title": null, "isDeleted": null },
+      "subunit": { "id": null, "name": null },
+      "empStatus": { "id": null, "name": null },
+      "supervisors": []
+    }
+  ],
+  "meta": { "total": 2 },
+  "rels": []
+}
